@@ -1,21 +1,22 @@
 #include "imibot_hw_base.hpp"
-#include <wiringPi.h>
+#include "gpio.h"
 
-#define GPIO_22 6;
-#define GPIO_23 13;
-#define GPIO_24 19;
-#define GPIO_25 26;
+#define GPIO_22 6
+#define GPIO_23 13
+#define GPIO_24 19
+#define GPIO_25 26
+
 
 namespace imibot_base
 {
 
   ImibotHWBase::ImibotHWBase()
   {
-    wiringPiSetup () ;
+/*    wiringPiSetup () ;
     pinMode (GPIO_22, OUTPUT) ;
     pinMode (GPIO_23, OUTPUT) ;
     pinMode (GPIO_24, OUTPUT) ;
-    pinMode (GPIO_25, OUTPUT) ;
+    pinMode (GPIO_25, OUTPUT) ;*/
 //    GPIO.setup(26, GPIO.OUT)
 //    GPIO.setup(19, GPIO.OUT)
 //    GPIO.setup(13, GPIO.OUT)
@@ -36,10 +37,16 @@ namespace imibot_base
    */
   void ImibotHWBase::stop()
   {
+    this->gpio22=0;
+    this->gpio23=0;
+    this->gpio24=0;
+    this->gpio25=0;
+/*
     digitalWrite (GPIO_22,  LOW);
     digitalWrite (GPIO_23,  LOW);
     digitalWrite (GPIO_24,  LOW);
     digitalWrite (GPIO_25,  LOW);
+*/
   }
 
   /**
@@ -50,10 +57,16 @@ namespace imibot_base
    */
   void ImibotHWBase::forward()
   {
+    this->gpio22=1;
+    this->gpio23=0;
+    this->gpio24=2;
+    this->gpio25=0;
+/*
     digitalWrite (GPIO_22,  HIGH);
     digitalWrite (GPIO_23,  LOW);
     digitalWrite (GPIO_24,  HIGH);
     digitalWrite (GPIO_25,  LOW);
+*/
   }
 
   /**
@@ -64,10 +77,12 @@ namespace imibot_base
    */
   void ImibotHWBase::reverse()
   {
+/*
     digitalWrite (GPIO_22,  LOW);
     digitalWrite (GPIO_23,  HIGH);
     digitalWrite (GPIO_24,  LOW);
     digitalWrite (GPIO_25,  HIGH);
+*/
   }
 
   /**
@@ -78,10 +93,12 @@ namespace imibot_base
    */
   void ImibotHWBase::turnLeft()
   {
+/*
     digitalWrite (GPIO_22,  LOW);
     digitalWrite (GPIO_23,  HIGH);
     digitalWrite (GPIO_24,  HIGH);
     digitalWrite (GPIO_25,  LOW);
+*/
   }
 
   /**
