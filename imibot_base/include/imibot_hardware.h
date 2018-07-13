@@ -6,6 +6,7 @@
 #include "hardware_interface/robot_hw.h"
 #include "ros/ros.h"
 #include "sensor_msgs/JointState.h"
+#include <string>
 
 namespace imibot_base
 {
@@ -22,6 +23,8 @@ namespace imibot_base
     	void writeCommandsToHardware();  // write()
 
     private:
+
+        void registerControlInterfaces();
 
     	double linearToAngular(const double &travel) const;
 
