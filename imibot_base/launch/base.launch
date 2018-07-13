@@ -42,7 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </node>
 
     <!-- Differential controller parameters and basic localization -->
-    <include file="$(find imibot_control)/launch/control.launch" />
+    <!-- include file="$(find imibot_control)/launch/control.launch" /-->
 
     <!--Teleop -->
     <!--include file="$(find husky_control)/launch/teleop.launch" /-->

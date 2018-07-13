@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<launch>
+    <include file="$(find imibot_base)/launch/base.launch" />
+    <include file="$(find imibot_control)/launch/control.launch" />
+</launch>
