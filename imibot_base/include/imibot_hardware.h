@@ -16,41 +16,41 @@ namespace imibot_base
   {
 
     public:
-    	ImibotHardware();
+        ImibotHardware();
 
-    	void updateJointsFromHardware(); // read()
+        void updateJointsFromHardware(); // read()
 
-    	void writeCommandsToHardware();  // write()
+        void writeCommandsToHardware();  // write()
 
     private:
 
         void registerControlInterfaces();
 
-    	double linearToAngular(const double &travel) const;
+        double linearToAngular(const double &travel) const;
 
-    	double angularToLinear(const double &angle) const;
+        double angularToLinear(const double &angle) const;
 
-    	void limitDifferentialSpeed(double &travel_speed_left, double &travel_speed_right);
+        void limitDifferentialSpeed(double &travel_speed_left, double &travel_speed_right);
 
-    	ros::NodeHandle nh_;
+        ros::NodeHandle nh_;
 
-    	hardware_interface::JointStateInterface joint_state_interface_;
-    	hardware_interface::VelocityJointInterface velocity_joint_interface_;
+        hardware_interface::JointStateInterface joint_state_interface_;
+        hardware_interface::VelocityJointInterface velocity_joint_interface_;
 
-    	double wheel_diameter_, max_accel_, max_speed_;
+        double wheel_diameter_, max_accel_, max_speed_;
 
-    	struct Joint
-    	{
-    		double position;
-    		double position_offset;
-    		double velocity;
-    		double effort;
-    		double velocity_command;
+        struct Joint
+        {
+            double position;
+            double position_offset;
+            double velocity;
+            double effort;
+            double velocity_command;
 
-    		Joint() :
-    		  position(0), velocity(0), effort(0), velocity_command(0)
-    		  { }
-    	} joints_[4];
+            Joint() :
+            position(0), velocity(0), effort(0), velocity_command(0)
+            { }
+        } joints_[4];
 
   };
 }
