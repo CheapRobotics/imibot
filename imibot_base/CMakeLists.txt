@@ -142,6 +142,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(imibot_node
+  src/imibot_hw_base.cpp
   src/imibot_base.cpp
   src/imibot_hardware.cpp)
 ## Rename C++ executable without prefix
@@ -175,7 +176,7 @@ target_link_libraries(imibot_node
 # )
 
 ## Mark executables and/or libraries for installation
-#install(TARGETS ${PROJECT_NAME} 
+#install(TARGETS ${PROJECT_NAME}
 # ${PROJECT_NAME}_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
