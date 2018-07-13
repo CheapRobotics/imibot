@@ -1,25 +1,20 @@
-
 cmake_minimum_required(VERSION 2.8.3)
-project(imibot_base)
+project(imibot_driver)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++11)
+# add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  controller_manager
-  hardware_interface
-  roslaunch
-  sensor_msgs
-  imibot_driver
+  rospy
+  message_generation
+  std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-find_package(Boost REQUIRED COMPONENTS chrono)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -52,11 +47,10 @@ find_package(Boost REQUIRED COMPONENTS chrono)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+ add_message_files(
+   FILES
+   StickControl.msg
+ )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -73,10 +67,10 @@ find_package(Boost REQUIRED COMPONENTS chrono)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   std_msgs
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -109,12 +103,9 @@ find_package(Boost REQUIRED COMPONENTS chrono)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES imibot_base
-#  CATKIN_DEPENDS other_catkin_pkg
+#  LIBRARIES imibot
+  CATKIN_DEPENDS rospy std_msgs
 #  DEPENDS system_lib
-  INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp hardware_interface sensor_msgs imibot_driver
-  DEPENDS Boost
 )
 
 ###########
@@ -124,14 +115,13 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include
-  ${Boost_INCLUDE_DIRS}
+# include
   ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/imibot_base.cpp
+#   src/${PROJECT_NAME}/imibot.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -142,9 +132,8 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(imibot_node
-  src/imibot_base.cpp
-  src/imibot_hardware.cpp)
+# add_executable(${PROJECT_NAME}_node src/imibot_node.cpp)
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -153,13 +142,12 @@ add_executable(imibot_node
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(imibot_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(imibot_node
-   ${catkin_LIBRARIES}
-   ${Boost_LIBRARIES}
-)
+# target_link_libraries(${PROJECT_NAME}_node
+#   ${catkin_LIBRARIES}
+# )
 
 #############
 ## Install ##
@@ -176,12 +164,11 @@ target_link_libraries(imibot_node
 # )
 
 ## Mark executables and/or libraries for installation
-#install(TARGETS ${PROJECT_NAME} 
-# ${PROJECT_NAME}_node
+# install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-#)
+# )
 
 ## Mark cpp header files for installation
 # install(DIRECTORY include/${PROJECT_NAME}/
@@ -202,7 +189,7 @@ target_link_libraries(imibot_node
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_imibot_base.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_imibot.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

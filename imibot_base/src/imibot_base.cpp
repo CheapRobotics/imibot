@@ -6,8 +6,9 @@
 int main(int argc, char *argv[])
 {
 	ros::init(argc, argv, "imibot_base");
+    ros::NodeHandle n;
 
-	imibot_base::ImibotHardware robot;
+	imibot_base::ImibotHardware robot(n);
 	controller_manager::ControllerManager cm(&robot);
 
 	ros::AsyncSpinner spinner(1);
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
     	robot.writeCommandsToHardware();
 
     	rate.sleep();
+        ros::spinOnce();
     }
     return 0;
 	

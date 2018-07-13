@@ -16,7 +16,7 @@ namespace imibot_base
   {
 
     public:
-    	ImibotHardware();
+    	ImibotHardware(ros::NodeHandle nh);
 
     	void updateJointsFromHardware(); // read()
 
@@ -33,6 +33,7 @@ namespace imibot_base
     	void limitDifferentialSpeed(double &travel_speed_left, double &travel_speed_right);
 
     	ros::NodeHandle nh_;
+        ros::Publisher cmd_pub;
 
     	hardware_interface::JointStateInterface joint_state_interface_;
     	hardware_interface::VelocityJointInterface velocity_joint_interface_;
