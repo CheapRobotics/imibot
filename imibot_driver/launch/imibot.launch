@@ -1,6 +1,8 @@
+<?xml version="1.0"?>
+
 <launch>
     <!-- Run node control -->
-    <node name="imibot_move" pkg="imibot" type="imibot_move_node.py"/>
+    <node name="imibot_move" pkg="imibot_driver" type="imibot_move_node.py"/>
     <!-- Run web_video_server -->
     
     <!-- Launch video stream -->
