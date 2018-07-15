@@ -10,6 +10,7 @@ class ControlHandler:
 
     def __init__(self):
         self.chassis = Chassis()
+        print 'init node'
 
     def setDirection(self):
         x = math.cos(math.radians(self.angle))
@@ -25,6 +26,7 @@ class ControlHandler:
     def move(self, msg):
         self.angle = msg.angle
         self.strength = msg.strength
+        print self.angle, self.strength
 
         if self.strength == 0:
             self.chassis.stop()
