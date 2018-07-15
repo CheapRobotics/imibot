@@ -3,10 +3,10 @@
 	
 	<arg name="multimaster" default="$(optenv ROBOT_MULTIMASTER false)"/>
 	<arg name="simulation" default="$(optenv ROBOT_SIMULATION false)"/>
-	<arg name="robot_namespace" default="$(optenv ROBOT_NAMESPACE robot)"/>
+  	<arg name="robot_namespace" default="/"/>
 	
 	<arg name="config_extras"
-	default="$(eval optenv('HUSKY_CONFIG_EXTRAS', find('imibot_control') + '/config/empty.yaml'))"/>
+	default="$(eval optenv('IMIBOT_CONFIG_EXTRAS', find('imibot_control') + '/config/empty.yaml'))"/>
 	
 	<arg name="laser_enabled" default="$(optenv HUSKY_LMS1XX_ENABLED false)"/>
 	<arg name="kinect_enabled" default="$(optenv HUSKY_KINECT_ENABLED false)"/>
@@ -41,8 +41,6 @@
 	</node>
 	
 	<node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server" output="screen"/>
-	
-	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 	
 	<node pkg="twist_mux" type="twist_mux" name="twist_mux">
 	<rosparam command="load" file="$(find imibot_control)/config/twist_mux.yaml" />

@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <robot name="imibot">
 
   <link name="base_link">
@@ -8,7 +9,7 @@
     </inertial>
     <visual>
       <geometry>
-        <box size="0.255 0.1 0.039"/>
+        <box size="0.255 0.095 0.039"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0.032"/>
       <material name="white">
@@ -17,13 +18,13 @@
     </visual>
     <collision>
       <geometry>
-        <box size="0.255 0.1 0.039"/>
+        <box size="0.255 0.095 0.039"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0.032"/>
     </collision>
   </link>
 
-  <link name="rear_left_wheel">
+  <link name="rear_left_wheel_link">
     <visual>
       <geometry>
         <cylinder radius="0.032" length="0.03"/>
@@ -41,7 +42,7 @@
     </collision>
   </link>
 
-  <link name="rear_right_wheel">
+  <link name="rear_right_wheel_link">
     <visual>
       <geometry>
         <cylinder radius="0.032" length="0.03"/>
@@ -59,7 +60,7 @@
     </collision>
   </link>
 
-  <link name="front_left_wheel">
+  <link name="front_left_wheel_link">
     <visual>
       <geometry>
         <cylinder radius="0.032" length="0.03"/>
@@ -77,7 +78,7 @@
     </collision>
   </link>
 
-  <link name="front_right_wheel">
+  <link name="front_right_wheel_link">
     <visual>
       <geometry>
         <cylinder radius="0.032" length="0.03"/>
@@ -95,65 +96,65 @@
     </collision>
   </link>
 
-  <joint name="rear_left_wheel_joint" type="continuous">
+  <joint name="rear_left_wheel" type="continuous">
     <parent link="base_link"/>
-    <child link="rear_left_wheel"/>
+    <child link="rear_left_wheel_link"/>
     <origin xyz="0.065 -0.065 0.032"/>
     <axis xyz="0 1 0"/>
     <limit effort="100" velocity="100"/>
   </joint>
-  <transmission name="rear_left_wheel_joint_trans">
+  <transmission name="rear_left_wheel_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="rear_left_wheel_joint"/>
-    <actuator name="rear_left_wheel_joint_motor">
+    <joint name="rear_left_wheel"/>
+    <actuator name="rear_left_wheel_motor">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
 
-  <joint name="rear_right_wheel_joint" type="continuous">
+  <joint name="rear_right_wheel" type="continuous">
     <parent link="base_link"/>
-    <child link="rear_right_wheel"/>
+    <child link="rear_right_wheel_link"/>
     <origin rpy="0 0 0" xyz="0.065 0.065 0.032"/>
     <axis rpy="0  0" xyz="0 1 0"/>
     <limit effort="100" velocity="100"/>
   </joint>
-  <transmission name="rear_right_wheel_joint_trans">
+  <transmission name="rear_right_wheel_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="rear_right_wheel_joint"/>
-    <actuator name="rear_right_wheel_joint_motor">
+    <joint name="rear_right_wheel"/>
+    <actuator name="rear_right_wheel_motor">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
 
-  <joint name="front_left_wheel_joint" type="continuous">
+  <joint name="front_left_wheel" type="continuous">
     <parent link="base_link"/>
-    <child link="front_left_wheel"/>
+    <child link="front_left_wheel_link"/>
     <origin rpy="0 0 0" xyz="-0.065 -0.065 0.032"/>
     <axis rpy="0  0" xyz="0 1 0"/>
     <limit effort="100" velocity="100"/>
   </joint>
-  <transmission name="front_left_wheel_joint_trans">
+  <transmission name="front_left_wheel_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="front_left_wheel_joint"/>
-    <actuator name="front_left_wheel_joint_motor">
+    <joint name="front_left_wheel"/>
+    <actuator name="front_left_wheel_motor">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
 
-  <joint name="front_right_wheel_joint" type="continuous">
+  <joint name="front_right_wheel" type="continuous">
     <parent link="base_link"/>
-    <child link="front_right_wheel"/>
+    <child link="front_right_wheel_link"/>
     <origin rpy="0 0 0" xyz="-0.065 0.065 0.032"/>
     <axis rpy="0  0" xyz="0 1 0"/>
     <limit effort="100" velocity="100"/>
   </joint>
-  <transmission name="front_right_wheel_joint_trans">
+  <transmission name="front_right_wheel_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="front_right_wheel_joint"/>
-    <actuator name="front_right_wheel_joint_motor">
+    <joint name="front_right_wheel"/>
+    <actuator name="front_right_wheel_motor">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>

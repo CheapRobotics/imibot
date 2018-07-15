@@ -20,7 +20,7 @@ namespace imibot_base
   nh_(nh)
   {
     this->cmd_pub = nh_.advertise<imibot_driver::StickControl>("robot_mg", 1000, false);
-     registerControlInterfaces();
+    registerControlInterfaces();
   }
 
   void ImibotHardware::registerControlInterfaces()
@@ -57,8 +57,8 @@ namespace imibot_base
     cout << "right : " << diff_speed_right << endl;
 
     imibot_driver::StickControl msg;
-    msg.strength = 100; // Read from velocity_joint_interface_ 
-    msg.angle = 90;     // Read from velocity_joint_interface_
+    msg.strength = diff_speed_left; // Read from velocity_joint_interface_ 
+    msg.angle = diff_speed_right;     // Read from velocity_joint_interface_
 
     this->cmd_pub.publish(msg);
   }

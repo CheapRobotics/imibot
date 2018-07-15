@@ -9,11 +9,14 @@
 				<inertia  ixx="0.02467" ixy="0" ixz="0" iyy="0.04411" iyz="0" izz="0.02467" />
 			</inertial-->
 			<visual>
-				<origin xyz="0 0 0" rpy="0 0 0" />
+				<origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
 				<geometry>
 					<!--mesh filename="package://imibot_description/meshes/wheel.dae" /-->
-					<cylinder radius="0.032" length="0.03"/>
+					<cylinder radius="${wheel_radius}" length="${wheel_length}"/>
 				</geometry>
+				<material name="black">
+					<color rgba="0 0 0 1"/>
+				</material>
 			</visual>
 			<collision>
 				<origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
