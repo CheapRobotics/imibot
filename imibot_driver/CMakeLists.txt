@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 2.8.3)
 project(imibot_driver)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
@@ -104,7 +105,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES imibot
-  CATKIN_DEPENDS rospy std_msgs std_msgs 
+  CATKIN_DEPENDS rospy std_msgs 
 #  DEPENDS system_lib
 )
 
