@@ -11,7 +11,6 @@ class DiffDriveControlHandler:
 
     def __init__(self):
         self.chassis = Chassis()
-        rospy.loginfo('init bot')
         print 'init bot'
 
     def setSpeed(self):
@@ -22,8 +21,6 @@ class DiffDriveControlHandler:
         self.left_speed = msg.left_speed
         self.right_speed = msg.right_speed
         print self.left_speed, self.right_speed
-        rospy.loginfo(self.left_speed)
-        rospy.loginfo(self.right_speed)
 
         if self.left_speed == 0 and self.right_speed == 0 :
             self.chassis.stop()
