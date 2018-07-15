@@ -2,7 +2,7 @@
 
 <launch>
     <!-- Run node control -->
-    <node name="imibot_driver" pkg="imibot_driver" type="imibot_diff_drive_node.py"/>
+    <node name="imibot_driver_node" pkg="imibot_driver" type="imibot_diff_drive_node.py"/>
     <!-- Run web_video_server -->
     
     <!-- Launch video stream -->
