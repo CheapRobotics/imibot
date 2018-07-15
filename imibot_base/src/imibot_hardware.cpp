@@ -1,6 +1,6 @@
 #include "imibot_hardware.h"
 #include "ros/ros.h"
-#include "imibot_driver/StickControl.h"
+#include "imibot_driver/DiffSpeed.h"
 #include <boost/assign/list_of.hpp>
 #include <string>
 #include <iostream>
@@ -19,7 +19,10 @@ namespace imibot_base
   :
   nh_(nh)
   {
-    this->cmd_pub = nh_.advertise<imibot_driver::StickControl>("robot_mg", 1000, false);
+    nh_.param<double>("wheel_diameter", wheel_diameter_, 0.066);
+    nh_.param<double>("max_accel", max_accel_, 5.0);
+    nh_.param<double>("max_speed", max_speed_, 1.0);
+    this->cmd_pub = nh_.advertise<imibot_driver::DiffSpeed>("robot_mg", 1000, false);
     registerControlInterfaces();
   }
 
@@ -48,34 +51,33 @@ namespace imibot_base
 
   }
 
+
+  /**
+  * Get latest velocity commands from ros_control via joint structure, and send to MCU
+  */
   void ImibotHardware::writeCommandsToHardware()
   {
     double diff_speed_left = angularToLinear(joints_[LEFT].velocity_command);
     double diff_speed_right = angularToLinear(joints_[RIGHT].velocity_command);
 
+    limitDifferentialSpeed(diff_speed_left, diff_speed_right);
+
     cout << "left  : " << diff_speed_left << endl;
     cout << "right : " << diff_speed_right << endl;
 
-    imibot_driver::StickControl msg;
-    msg.strength = diff_speed_left; // Read from velocity_joint_interface_ 
-    msg.angle = diff_speed_right;     // Read from velocity_joint_interface_
+    imibot_driver::DiffSpeed msg;
+    msg.left_speed = diff_speed_left * 100; // Read from velocity_joint_interface_ 
+    msg.right_speed = diff_speed_right * 100;     // Read from velocity_joint_interface_
 
     this->cmd_pub.publish(msg);
   }
 
-  double ImibotHardware::linearToAngular(const double &travel) const
-  {
-  	return travel / wheel_diameter_ * 2;
-  }
 
-  double ImibotHardware::angularToLinear(const double &angle) const
+  /**
+  * Scale left and right speed outputs to maintain ros_control's desired trajectory without saturating the outputs
+  */
+  void ImibotHardware::limitDifferentialSpeed(double &diff_speed_left, double &diff_speed_right)
   {
-  	return angle * wheel_diameter_ / 2;
-  }
-
-  void ImibotHardware::limitDifferentialSpeed(double &travel_speed_left, double &travel_speed_right)
-  {
-    /*
     double large_speed = std::max(std::abs(diff_speed_left), std::abs(diff_speed_right));
 
     if (large_speed > max_speed_)
@@ -83,8 +85,23 @@ namespace imibot_base
       diff_speed_left *= max_speed_ / large_speed;
       diff_speed_right *= max_speed_ / large_speed;
     }
-    */
   }
+
+  /**
+  * Husky reports travel in metres, need radians for ros_control RobotHW
+  */
+  double ImibotHardware::linearToAngular(const double &travel) const
+  {
+    return travel / wheel_diameter_ * 2;
+  }
+
+  /**
+  * RobotHW provides velocity command in rad/s, Husky needs m/s,
+  */
+  double ImibotHardware::angularToLinear(const double &angle) const
+  {
+    return angle * wheel_diameter_ / 2;
+}
 
 
 }

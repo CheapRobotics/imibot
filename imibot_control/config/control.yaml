@@ -34,7 +34,7 @@ wheel_radius_multiplier : 1.0 # default: 1.0
 linear:
   x:
     has_velocity_limits : true
-    max_velocity : 1.0 # m/s
+    max_velocity : 3.0 # m/s
     has_acceleration_limits: true
     max_acceleration : 3.0 # m/s^2
 angular:

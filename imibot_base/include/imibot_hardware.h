@@ -26,9 +26,9 @@ namespace imibot_base
 
         void registerControlInterfaces();
 
-    	double linearToAngular(const double &travel) const;
+        double linearToAngular(const double &travel) const;
 
-    	double angularToLinear(const double &angle) const;
+        double angularToLinear(const double &angle) const;
 
     	void limitDifferentialSpeed(double &travel_speed_left, double &travel_speed_right);
 
