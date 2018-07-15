@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from imibot.msg import DiffSpeed
+from imibot_driver.msg import DiffSpeed
 from diff_drive_control_handler import DiffDriveControlHandler
 
 

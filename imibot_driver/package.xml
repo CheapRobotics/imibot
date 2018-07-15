@@ -2,7 +2,7 @@
 <package format="2">
   <name>imibot_driver</name>
   <version>0.0.0</version>
-  <description>The imibot package</description>
+  <description>Imibot driver package for the Pi</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->

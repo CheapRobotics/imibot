@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from imibot.msg import StickControl
+from imibot_driver.msg import StickControl
 from control_handler import ControlHandler
 
 
