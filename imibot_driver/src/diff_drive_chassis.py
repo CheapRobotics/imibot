@@ -1,4 +1,4 @@
-*import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import Adafruit_PCA9685
 
 
