@@ -1,0 +1,5 @@
+# Get camera stream and video server at http://<ROS_IP>:8080/stream_viewer?topic=/webcam/image_raw # 
+    roslaunch imibot_camera camera_stream_server.launch
+
+# Get only camera stream and visualize it with image_view #
+    roslaunch imibot_camera camera_stream.launch
