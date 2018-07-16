@@ -46,7 +46,7 @@ def get_left_rpm(c):
 
  	if count_left==sample:
  	 	set_left_end() # create end time
- 	 	delta = end - start # time taken to do a half rotation in seconds
+ 	 	delta = start_left - start_left # time taken to do a half rotation in seconds
  	 	delta = delta / 60 # converted to minutes
  	 	rpm_left = (sample / delta) / 2 # converted to time for a full single rotation
  	 	print 'left RPM : ', rpm_left
@@ -63,7 +63,7 @@ def get_right_rpm(c):
 
  	if count_right==sample:
  	 	set_right_end() # create end time
- 	 	delta = end - start # time taken to do a half rotation in seconds
+ 	 	delta = end_right - start_right # time taken to do a half rotation in seconds
  	 	delta = delta / 60 # converted to minutes
  	 	rpm_right = (sample / delta) / 2 # converted to time for a full single rotation
  	 	print 'right RPM : ', rpm_right
