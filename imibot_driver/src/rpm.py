@@ -50,6 +50,7 @@ def get_left_rpm(c):
  	 	delta = delta / 60 # converted to minutes
  	 	rpm_left = (sample / delta) / 2 # converted to time for a full single rotation
  	 	print 'left RPM : ', rpm_left
+ 	 	print 'left m/s : ', rpm_left * ((2 * 3,14 * 0.033 ) / 60 )
  	 	count_left = 0 # reset the count to 0
 
 def get_right_rpm(c):
@@ -67,6 +68,7 @@ def get_right_rpm(c):
  	 	delta = delta / 60 # converted to minutes
  	 	rpm_right = (sample / delta) / 2 # converted to time for a full single rotation
  	 	print 'right RPM : ', rpm_right
+ 	 	print 'right m/s : ', rpm_right * ((2 * 3,14 * 0.033 ) / 60 )
  	 	count_right = 0 # reset the count to 0
 
 GPIO.add_event_detect(sensor_left, GPIO.RISING, callback=get_left_rpm)
