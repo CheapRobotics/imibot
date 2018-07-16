@@ -29,11 +29,11 @@ def set_left_end():
 
 def set_right_start():
  	global start_right
- 	start_left = time.time()
+ 	start_right = time.time()
 
 def set_right_end():
  	global end_right
- 	end_left = time.time()
+ 	end_right = time.time()
 
 def get_left_rpm(c):
  	global count_left # delcear the count variable global so we can edit it
@@ -46,7 +46,7 @@ def get_left_rpm(c):
 
  	if count_left==sample:
  	 	set_left_end() # create end time
- 	 	delta = start_left - start_left # time taken to do a half rotation in seconds
+ 	 	delta = end_left - start_left # time taken to do a half rotation in seconds
  	 	delta = delta / 60 # converted to minutes
  	 	rpm_left = (sample / delta) / 2 # converted to time for a full single rotation
  	 	print 'left RPM : ', rpm_left
