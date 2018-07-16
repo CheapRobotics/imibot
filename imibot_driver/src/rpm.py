@@ -10,7 +10,7 @@ GPIO.setmode(GPIO.BCM) # set GPIO numbering system to BCM
 GPIO.setup(sensor_left,GPIO.IN) # set our sensor pin to an input
 GPIO.setup(sensor_right,GPIO.IN) # set our sensor pin to an input
 
-sample = 10 # how many half revolutions to time
+sample = 1 # how many half revolutions to time
 count_left = 0
 count_right = 0
 
@@ -44,13 +44,13 @@ def get_left_rpm(c):
  	else:
  	 	count_left = count_left + 1
 
- 	if count_left==sample:
+ 	if count_left == sample:
  	 	set_left_end() # create end time
  	 	delta = end_left - start_left # time taken to do a half rotation in seconds
  	 	delta = delta / 60 # converted to minutes
- 	 	rpm_left = (sample / delta) / 2 # converted to time for a full single rotation
+ 	 	rpm_left = (sample / delta) / 20 # converted to time for a full single rotation
  	 	print 'left RPM : ', rpm_left
- 	 	print 'left m/s : ', rpm_left * ((2 * 3,14 * 0.033 ) / 60 )
+ 	 	print 'left m/s : ', rpm_left * ((2 * 3.14 * 0.033 ) / 60 )
  	 	count_left = 0 # reset the count to 0
 
 def get_right_rpm(c):
@@ -62,13 +62,13 @@ def get_right_rpm(c):
  	else:
  	 	count_right = count_right + 1
 
- 	if count_right==sample:
+ 	if count_right == sample:
  	 	set_right_end() # create end time
  	 	delta = end_right - start_right # time taken to do a half rotation in seconds
  	 	delta = delta / 60 # converted to minutes
  	 	rpm_right = (sample / delta) / 2 # converted to time for a full single rotation
  	 	print 'right RPM : ', rpm_right
- 	 	print 'right m/s : ', rpm_right * ((2 * 3,14 * 0.033 ) / 60 )
+ 	 	print 'right m/s : ', rpm_right * ((2 * 3.14 * 0.033 ) / 60 )
  	 	count_right = 0 # reset the count to 0
 
 GPIO.add_event_detect(sensor_left, GPIO.RISING, callback=get_left_rpm)
