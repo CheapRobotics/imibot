@@ -2,7 +2,7 @@
 #include "ros/ros.h"
 #include "imibot_driver/DiffSpeed.h"
 #include <boost/assign/list_of.hpp>
-#include <string>
+#include "std_msgs/String.h"
 #include <iostream>
 
 namespace
@@ -42,11 +42,10 @@ namespace imibot_base
     }
     registerInterface(&joint_state_interface_);
     registerInterface(&velocity_joint_interface_);
-
-    ros::Subscriber speed_sensors_sub_ = nh_.subscribe("imibot/speed_sensors", 1, &ImibotHardware::getLastSensorsValues);
+    ros::Subscriber speed_sensors_sub_ = nh_.subscribe("imibot/speed_sensors", 1, getLastSensorsValues);
   }
 
-  void ImibotHardware::getLastSensorsValues(const std_msgs::String msg)
+  void ImibotHardware::getLastSensorsValues(const std_msgs::String::ConstPtr& msg)
   {
     left_speed = &msg->left_measured_vel;
     right_speed = &msg->right_measured_vel;
@@ -61,16 +60,15 @@ namespace imibot_base
       double delta_left = linearToAngular(left_travel) - joints_[i].position;
 
       joints_[i].position += delta_left;
-      joints_[i].velocity = msg->left_measured_vel;
+      joints_[i].velocity = linearToAngular(left_travel);
     }
     for (int i = 2; i < 4; i++)
     {
       double delta_right = linearToAngular(right_travel) - joints_[i].position;
 
       joints_[i].position += delta_right;
-      joints_[i].velocity = msg->right_measured_vel;
+      joints_[i].velocity = linearToAngular(right_travel);
     }
-
   }
 
 

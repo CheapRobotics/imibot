@@ -64,18 +64,18 @@ class SpeedSensors:
     	self.right_direction = direction
 
 
-	def get_left_rpm(self):
-		return rpm_left
+	def get_left_speed(self):
+		return self.mps_left
 
-	def get_right_rpm(self):
-		return rpm_right
+	def get_right_speed(self):
+		return self.mps_right
 
 
 	def get_left_travel(self):
-		return left_travel
+		return self.left_travel
 
 	def get_right_travel(self):
-		return right_travel
+		return self.right_travel
 
 
 
@@ -99,7 +99,7 @@ class SpeedSensors:
 
 	        self.rpm_left = 60 / (ms_left_for_one_turn / 1000)
 
-	        mps_left = self.rpm_left * self.circ / 60
+	        self.mps_left = self.rpm_left * self.circ / 60
 
 	        print 'left RPM : ', self.rpm_left
 	        print 'distance parcourue à gauche : ', self.left_travel
@@ -126,7 +126,7 @@ class SpeedSensors:
 
 	        self.rpm_right = 60 / (ms_right_for_one_turn / 1000)
 
-	        mps_right = self.rpm_right * self.circ / 60
+	        self.mps_right = self.rpm_right * self.circ / 60
 
 	        print 'right RPM : ', self.rpm_right
 	        print 'distance parcourue à droite : ', self.right_travel

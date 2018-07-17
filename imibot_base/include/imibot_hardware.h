@@ -6,7 +6,8 @@
 #include "hardware_interface/robot_hw.h"
 #include "ros/ros.h"
 #include "sensor_msgs/JointState.h"
-#include <string>
+#include "std_msgs/String.h"
+#include <iostream>
 
 namespace imibot_base
 {
@@ -26,7 +27,7 @@ namespace imibot_base
 
         void registerControlInterfaces();
 
-        void getLastSensorsValues(const std_msgs::String &msg);
+        void getLastSensorsValues(const std_msgs::String::ConstPtr& msg);
 
         double linearToAngular(const double &travel) const;
 
