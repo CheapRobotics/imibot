@@ -51,6 +51,7 @@ find_package(catkin REQUIRED COMPONENTS
    FILES
    StickControl.msg
    DiffSpeed.msg
+   SensorsReadings.msg
  )
 
 ## Generate services in the 'srv' folder
