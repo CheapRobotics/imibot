@@ -112,7 +112,7 @@ namespace imibot_base
   */
   double ImibotHardware::linearToAngular(const double &travel) const
   {
-    return travel / wheel_diameter_ * 2;
+    return travel / (wheel_diameter_ * 2);
   }
 
   /**
@@ -120,7 +120,7 @@ namespace imibot_base
   */
   double ImibotHardware::angularToLinear(const double &angle) const
   {
-    return angle * wheel_diameter_ / 2;
+    return angle * (wheel_diameter_ / 2);
 }
 
 
