@@ -63,6 +63,12 @@ class SpeedSensors:
     def set_right_direction(self, direction):
     	self.right_direction = direction
 
+    def stop_left_speed(self):
+    	self.mps_left = 0
+
+    def stop_right_speed(self):
+    	self.mps_right = 0
+
 
 	def get_left_speed(self):
 		return self.mps_left
