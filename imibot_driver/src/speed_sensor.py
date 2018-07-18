@@ -39,7 +39,7 @@ class SpeedSensors(Thread):
     def __init__(self):
         self.speed_msg = SensorsReadings()
         rospy.init_node('imibot_driver')
-        self.pub = rospy.Publisher('imibot/speed_sensors', SensorsReadings, queue_size=10)
+        self.pub = rospy.Publisher('imibot/speed_sensors', SensorsReadings, queue_size=100)
 
         Thread.__init__(self)
         self.daemon = True
@@ -79,17 +79,9 @@ class SpeedSensors(Thread):
 
     def set_left_direction(self, direction):
         self.left_direction = direction
-        if direction == 1:
-            print 'L : Forward'
-        else:
-            print 'L : Reverse'
 
     def set_right_direction(self, direction):
         self.right_direction = direction
-        if direction == 1:
-            print 'R : Forward'
-        else:
-            print 'R : Reverse'
 
     def stop_left_speed(self):
         self.mps_left = 0
@@ -101,16 +93,15 @@ class SpeedSensors(Thread):
         if not self.count_left:
             self.set_left_start()  # create start time
 
-        if (time.time() - self.start_left) > 100:
-            self.count_left += 1  # increase counter by 1
-            if self.left_direction == 1:
-                self.left_travel += self.circ / self.total_ticks
-            elif self.left_direction == 0:
-                self.left_travel -= self.circ / self.total_ticks
+        self.count_left += 1  # increase counter by 1
+        if self.left_direction == 1:
+            self.left_travel += self.circ / self.total_ticks
+        elif self.left_direction == 0:
+            self.left_travel -= self.circ / self.total_ticks
 
         if self.count_left == self.sample:
             self.set_left_end()  # create end time
-            delta = self.end_left - self.start_left  # time taken to do a half rotation in seconds
+            delta = self.end_left - self.start_left  # time taken to do a quarter rotation in seconds
             delta *= 1000  # converted to ms
 
             ms_left_for_one_turn = self.total_ticks / self.sample * delta
@@ -118,25 +109,21 @@ class SpeedSensors(Thread):
             rpm_left = 60 / (ms_left_for_one_turn / 1000)
 
             self.mps_left = rpm_left * self.circ / 60
-
-            print 'left RPM : ', self.rpm_left
-            print 'distance parcourue à gauche : ', self.left_travel
             self.count_left = 0  # reset the count to 0
 
     def measure_right(self, c):
         if not self.count_right:
             self.set_right_start()  # create start time
 
-        if (time.time() - self.start_right) > 100:
-            self.count_right += 1  # increase counter by 1
-            if self.right_direction == 1:
-                self.right_travel += self.circ / self.total_ticks
-            elif self.right_direction == 0:
-                self.right_travel -= self.circ / self.total_ticks
+        self.count_right += 1  # increase counter by 1
+        if self.right_direction == 1:
+            self.right_travel += self.circ / self.total_ticks
+        elif self.right_direction == 0:
+            self.right_travel -= self.circ / self.total_ticks
 
         if self.count_right == self.sample:
             self.set_right_end()  # create end time
-            delta = self.end_right - self.start_right  # time taken to do a half rotation in seconds
+            delta = self.end_right - self.start_right  # time taken to do a quarter rotation in seconds
             delta *= 1000  # converted to ms
 
             ms_right_for_one_turn = total_ticks / self.sample * delta
@@ -144,7 +131,4 @@ class SpeedSensors(Thread):
             rpm_right = 60 / (ms_right_for_one_turn / 1000)
 
             self.mps_right = rpm_right * self.circ / 60
-
-            print 'right RPM : ', self.rpm_right
-            print 'distance parcourue à droite : ', self.right_travel
             self.count_right = 0  # reset the count to 0

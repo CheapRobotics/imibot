@@ -32,10 +32,12 @@ class DiffDriveControlHandler:
 
         if self.left_speed == 0 and self.right_speed == 0:
             self.chassis.stop()
+            self.speed_measures.stop_left_speed()
+            self.speed_measures.stop_right_speed()
             #print 'stop'
         else:
-            self.leftFreq = (self.servo_scale * (self.left_speed / 100)) + self.servo_min
-            self.rightFreq = (self.servo_scale * (self.right_speed / 100)) + self.servo_min
+            self.leftFreq = (self.servo_scale * (abs(self.left_speed) / 100)) + self.servo_min
+            self.rightFreq = (self.servo_scale * (abs(self.right_speed) / 100)) + self.servo_min
 
             if self.left_speed > 0 and self.right_speed > 0:
                 self.speed_measures.set_left_direction(1)
