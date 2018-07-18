@@ -1,8 +1,8 @@
 #include "imibot_hardware.h"
 #include "ros/ros.h"
 #include "imibot_driver/DiffSpeed.h"
+#include "imibot_driver/SensorsReadings.h"
 #include <boost/assign/list_of.hpp>
-#include "std_msgs/String.h"
 #include <iostream>
 
 namespace
@@ -24,6 +24,7 @@ namespace imibot_base
     nh_.param<double>("max_speed", max_speed_, 1.0);
     this->cmd_pub = nh_.advertise<imibot_driver::DiffSpeed>("robot_mg", 1000, false);
     registerControlInterfaces();
+    ros::Subscriber speed_sensors_sub_ = nh_.subscribe("imibot/speed_sensors", 1, &ImibotHardware::getLastSensorsValues, this);
   }
 
   void ImibotHardware::registerControlInterfaces()
@@ -42,15 +43,14 @@ namespace imibot_base
     }
     registerInterface(&joint_state_interface_);
     registerInterface(&velocity_joint_interface_);
-    ros::Subscriber speed_sensors_sub_ = nh_.subscribe("imibot/speed_sensors", 1, getLastSensorsValues);
   }
 
-  void ImibotHardware::getLastSensorsValues(const std_msgs::String::ConstPtr& msg)
+  void ImibotHardware::getLastSensorsValues(const imibot_driver::SensorsReadings::ConstPtr& msg)
   {
-    left_speed = &msg->left_measured_vel;
-    right_speed = &msg->right_measured_vel;
-    left_travel = &msg->left_measured_travel;
-    right_travel = &msg->right_measured_travel;
+    left_speed = msg->left_measured_vel;
+    right_speed = msg->right_measured_vel;
+    left_travel = msg->left_measured_travel;
+    right_travel = msg->right_measured_travel;
   }
 
   void ImibotHardware::updateJointsFromHardware()
