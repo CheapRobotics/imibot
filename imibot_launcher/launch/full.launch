@@ -3,5 +3,5 @@
 <launch>
     <include file="$(find imibot_launcher)/launch/robot.launch" />
     <include file="$(find imibot_launcher)/launch/gui.launch" />
-    <include file="$(find imibot_camera)/launch/camera_stream_server.launch" />
+    <!--include file="$(find imibot_camera)/launch/camera_stream_server.launch" /-->
 </launch>

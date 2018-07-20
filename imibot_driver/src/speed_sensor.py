@@ -38,8 +38,8 @@ class SpeedSensors(Thread):
 
     def __init__(self):
         self.speed_msg = SensorsReadings()
-        rospy.init_node('imibot_driver')
-        self.pub = rospy.Publisher('imibot/speed_sensors', SensorsReadings, queue_size=100)
+        rospy.init_node('imibot_sensors')
+        self.pub = rospy.Publisher('imibot/speed_sensors', SensorsReadings, queue_size=1)
 
         Thread.__init__(self)
         self.daemon = True
@@ -126,7 +126,7 @@ class SpeedSensors(Thread):
             delta = self.end_right - self.start_right  # time taken to do a quarter rotation in seconds
             delta *= 1000  # converted to ms
 
-            ms_right_for_one_turn = total_ticks / self.sample * delta
+            ms_right_for_one_turn = self.total_ticks / self.sample * delta
 
             rpm_right = 60 / (ms_right_for_one_turn / 1000)
 
