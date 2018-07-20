@@ -1,9 +1,10 @@
 #include "imibot_hardware.h"
 #include "ros/ros.h"
 #include "imibot_driver/DiffSpeed.h"
+#include "imibot_driver/SensorsReadings.h"
 #include <boost/assign/list_of.hpp>
-#include <string>
 #include <iostream>
+#include <ros/console.h>
 
 namespace
 {
@@ -24,6 +25,8 @@ namespace imibot_base
     nh_.param<double>("max_speed", max_speed_, 1.0);
     this->cmd_pub = nh_.advertise<imibot_driver::DiffSpeed>("robot_mg", 1000, false);
     registerControlInterfaces();
+    this->speed_sensors_sub_ = nh_.subscribe("/imibot/speed_sensors", 1, &ImibotHardware::getLastSensorsValues, this);
+    cout << speed_sensors_sub_.getTopic() << endl;
   }
 
   void ImibotHardware::registerControlInterfaces()
@@ -43,15 +46,24 @@ namespace imibot_base
     registerInterface(&joint_state_interface_);
     registerInterface(&velocity_joint_interface_);
 
-    ros::Subscriber speed_sensors_sub_ = nh_.subscribe("imibot/speed_sensors", 1, &ImibotHardware::getLastSensorsValues);
+    for (int i = 0; i < 4; i++)
+    {
+      joints_[i].position = 0;
+      joints_[i].position_offset = 0;
+      left_speed = right_speed = left_travel = right_travel = 0;
+    }
   }
 
-  void ImibotHardware::getLastSensorsValues(const std_msgs::String msg)
+  void ImibotHardware::getLastSensorsValues(const imibot_driver::SensorsReadings::ConstPtr& msg)
   {
-    left_speed = &msg->left_measured_vel;
-    right_speed = &msg->right_measured_vel;
-    left_travel = &msg->left_measured_travel;
-    right_travel = &msg->right_measured_travel;
+    left_speed = msg->left_measured_vel;
+    right_speed = msg->right_measured_vel;
+    left_travel = msg->left_measured_travel;
+    right_travel = msg->right_measured_travel;
+    cout << "left_speed  : " << left_speed << endl;
+    cout << "right_speed  : " << right_speed << endl;
+    cout << "left_travel  : " << left_travel << endl;
+    cout << "right_travel  : " << right_travel << endl;
   }
 
   void ImibotHardware::updateJointsFromHardware()
@@ -59,18 +71,16 @@ namespace imibot_base
     for (int i = 0; i < 2; i++)
     {
       double delta_left = linearToAngular(left_travel) - joints_[i].position;
-
       joints_[i].position += delta_left;
-      joints_[i].velocity = msg->left_measured_vel;
+      joints_[i].velocity = linearToAngular(left_speed);
     }
     for (int i = 2; i < 4; i++)
     {
       double delta_right = linearToAngular(right_travel) - joints_[i].position;
 
       joints_[i].position += delta_right;
-      joints_[i].velocity = msg->right_measured_vel;
+      joints_[i].velocity = linearToAngular(right_speed);
     }
-
   }
 
 
@@ -83,9 +93,6 @@ namespace imibot_base
     double diff_speed_right = angularToLinear(joints_[RIGHT].velocity_command);
 
     limitDifferentialSpeed(diff_speed_left, diff_speed_right);
-
-    cout << "left  : " << diff_speed_left << endl;
-    cout << "right : " << diff_speed_right << endl;
 
     imibot_driver::DiffSpeed msg;
     msg.left_speed = diff_speed_left * 100; // Read from velocity_joint_interface_ 
@@ -123,7 +130,7 @@ namespace imibot_base
   double ImibotHardware::angularToLinear(const double &angle) const
   {
     return angle * wheel_diameter_ / 2;
-}
+  }
 
 
 }

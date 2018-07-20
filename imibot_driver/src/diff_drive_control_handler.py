@@ -3,7 +3,6 @@ import math
 import rospy
 
 from chassis import Chassis
-from imibot_driver.msg import SensorsReadings
 from speed_sensor import SpeedSensors
 
 
@@ -13,38 +12,29 @@ class DiffDriveControlHandler:
     servo_scale = servo_max - servo_min
 
     def __init__(self):
+        print 'Differential drive node initialization...'
+        self.left_speed = 0
+        self.right_speed = 0
+        self.leftFreq = 0
+        self.rightFreq = 0
         self.chassis = Chassis()
         self.speed_measures = SpeedSensors()
-
-        pub = rospy.Publisher('imibot/speed_sensors', SensorsReadings, queue_size = 10)
-        print 'init bot'
-
-        while True:
-            self.publishSensors()
-            time.sleep(0.5)
+        print 'Done !'
 
     def setSpeed(self):
         self.chassis.setLeftSpeed(int(self.leftFreq))
         self.chassis.setRightSpeed(int(self.rightFreq))
 
-    def publishSensors(self):
-        self.speed_msg = SensorsReadings()
-
-        self.speed_msg.left_measured_travel = self.speed_measures.get_left_travel()
-        self.speed_msg.right_measured_travel = self.speed_measures.get_right_travel()
-        self.speed_msg.left_measured_vel = self.speed_measures.get_left_rpm()
-        self.speed_msg.right_measured_vel = self.speed_measures.get_right_rpm()
-
-        pub.publish(self.speed_msg)
-
     def move(self, msg):
         self.left_speed = msg.left_speed
         self.right_speed = msg.right_speed
-        print self.left_speed, self.right_speed
+        #print self.left_speed, self.right_speed
 
-        if self.left_speed == 0 and self.right_speed == 0 :
+        if self.left_speed == 0 and self.right_speed == 0:
             self.chassis.stop()
-            print 'stop'
+            self.speed_measures.stop_left_speed()
+            self.speed_measures.stop_right_speed()
+            #print 'stop'
         else:
             self.leftFreq = (self.servo_scale * (abs(self.left_speed) / 100)) + self.servo_min
             self.rightFreq = (self.servo_scale * (abs(self.right_speed) / 100)) + self.servo_min
@@ -52,24 +42,24 @@ class DiffDriveControlHandler:
             if self.left_speed > 0 and self.right_speed > 0:
                 self.speed_measures.set_left_direction(1)
                 self.speed_measures.set_right_direction(1)
-                print 'forward'
+                #print 'forward'
                 self.chassis.forward()
                 self.setSpeed()
             elif self.left_speed < 0 and self.right_speed > 0:
                 self.speed_measures.set_left_direction(0)
                 self.speed_measures.set_right_direction(1)
-                print 'left'
+                #print 'left'
                 self.chassis.turnLeft()
                 self.setSpeed()
             elif self.left_speed > 0 and self.right_speed < 0:
                 self.speed_measures.set_left_direction(1)
                 self.speed_measures.set_right_direction(0)
-                print 'right'
+                #print 'right'
                 self.chassis.turnRight()
                 self.setSpeed()
             elif self.left_speed < 0 and self.right_speed < 0:
                 self.speed_measures.set_left_direction(0)
                 self.speed_measures.set_right_direction(0)
-                print 'reverse'
+                #print 'reverse'
                 self.chassis.reverse()
                 self.setSpeed()

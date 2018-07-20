@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   roslaunch
   sensor_msgs
   imibot_driver
+  std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -73,10 +74,10 @@ find_package(Boost REQUIRED COMPONENTS chrono)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   std_msgs  # Or other packages containing msgs
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -113,7 +114,7 @@ catkin_package(
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
   INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp hardware_interface sensor_msgs imibot_driver
+  CATKIN_DEPENDS roscpp hardware_interface sensor_msgs imibot_driver std_msgs
   DEPENDS Boost
 )
 
