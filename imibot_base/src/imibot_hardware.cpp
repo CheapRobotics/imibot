@@ -26,7 +26,6 @@ namespace imibot_base
     this->cmd_pub = nh_.advertise<imibot_driver::DiffSpeed>("robot_mg", 1000, false);
     registerControlInterfaces();
     this->speed_sensors_sub_ = nh_.subscribe("/imibot/speed_sensors", 1, &ImibotHardware::getLastSensorsValues, this);
-    cout << speed_sensors_sub_.getTopic() << endl;
   }
 
   void ImibotHardware::registerControlInterfaces()
@@ -60,10 +59,6 @@ namespace imibot_base
     right_speed = msg->right_measured_vel;
     left_travel = msg->left_measured_travel;
     right_travel = msg->right_measured_travel;
-    cout << "left_speed  : " << left_speed << endl;
-    cout << "right_speed  : " << right_speed << endl;
-    cout << "left_travel  : " << left_travel << endl;
-    cout << "right_travel  : " << right_travel << endl;
   }
 
   void ImibotHardware::updateJointsFromHardware()
