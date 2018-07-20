@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 
 <launch>
-    <include file="$(find imibot_base)/launch/base.launch" />
-    <include file="$(find imibot_control)/launch/control.launch" />
+    <!-- Run driver package -->
+    <node name="imibot_driver" pkg="imibot_driver" type="imibot_diff_drive_node.py" output="screen" />
+    
+    <include file="$(find openni_launch)/launch/openni.launch" />
+
+    <!-- Run web_video_server -->
+    <!--include file="$(find imibot_camera)/launch/camera_stream_server.launch" /-->
 </launch>

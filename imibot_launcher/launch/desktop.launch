@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 
 <launch>
-    <include file="$(find imibot_launcher)/launch/robot.launch" />
+
+    <include file="$(find imibot_launcher)/launch/robot_control.launch" />
+    
     <include file="$(find imibot_launcher)/launch/gui.launch" />
+
     <!--include file="$(find imibot_camera)/launch/camera_stream_server.launch" /-->
 </launch>
