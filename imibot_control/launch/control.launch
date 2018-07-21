@@ -3,6 +3,8 @@
 	
 		<arg name="multimaster" default="$(optenv ROBOT_MULTIMASTER false)"/>
 		<arg name="simulation" default="$(optenv ROBOT_SIMULATION false)"/>
+        <arg name="joy_dev" default="/dev/input/js2" />
+        <arg name="joystick" default="true" />
 	  	<arg name="robot_namespace" default="/"/>
 		
 		<arg name="config_extras" default="$(eval optenv('IMIBOT_CONFIG_EXTRAS', find('imibot_control') + '/config/empty.yaml'))"/>
@@ -29,6 +31,16 @@
 		
 		<!-- Load controller configuration -->
 		<rosparam command="load" file="$(find imibot_control)/config/control.yaml" />
+
+        <group ns="joy_teleop">
+
+            <rosparam command="load" file="$(find imibot_control)/config/teleop_ps3.yaml" />
+
+            <node pkg="joy" type="joy_node" name="joy_node" />
+
+            <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy"/>
+
+        </group>
 		
 		<!-- Spawn controllers -->
 		<node name="base_controller_spawner" pkg="controller_manager" type="spawner" args="imibot_joint_publisher imibot_velocity_controller"/>

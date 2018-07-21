@@ -6,6 +6,8 @@ Panels:
       Expanded:
         - /RobotModel1/Links1/front_left_wheel_link1/Position1
         - /DepthCloud1/Auto Size1
+        - /Map1
+        - /Map1/Status1
       Splitter Ratio: 0.5
     Tree Height: 517
   - Class: rviz/Selection
@@ -133,6 +135,8 @@ Visualization Manager:
           Value: true
         inertial_link:
           Value: true
+        map:
+          Value: true
         odom:
           Value: true
         rear_left_wheel_link:
@@ -145,6 +149,8 @@ Visualization Manager:
       Show Axes: false
       Show Names: false
       Tree:
+        map:
+          {}
         odom:
           base_link:
             base_footprint:
@@ -175,7 +181,7 @@ Visualization Manager:
       Enabled: true
       Name: InteractiveMarkers
       Show Axes: false
-      Show Descriptions: true
+      Show Descriptions: false
       Show Visual Aids: false
       Update Topic: /twist_marker_server/update
       Value: true
@@ -227,10 +233,10 @@ Visualization Manager:
       Class: rviz/DepthCloud
       Color: 255; 255; 255
       Color Image Topic: ""
-      Color Transformer: ""
+      Color Transformer: RGB8
       Color Transport Hint: raw
       Decay Time: 0
-      Depth Map Topic: ""
+      Depth Map Topic: /camera/depth/image_rect
       Depth Map Transport Hint: raw
       Enabled: false
       Invert Rainbow: false
@@ -242,7 +248,7 @@ Visualization Manager:
       Occlusion Compensation:
         Occlusion Time-Out: 30
         Value: false
-      Position Transformer: ""
+      Position Transformer: XYZ
       Queue Size: 5
       Selectable: true
       Size (Pixels): 3
@@ -253,7 +259,7 @@ Visualization Manager:
       Value: false
     - Class: rviz/Camera
       Enabled: true
-      Image Rendering: background and overlay
+      Image Rendering: overlay
       Image Topic: /camera/rgb/image_color
       Name: Camera
       Overlay Alpha: 0.5
@@ -266,6 +272,7 @@ Visualization Manager:
         Grid: true
         InteractiveMarkers: true
         LaserScan: true
+        Map: true
         Odometry: true
         PointCloud2: true
         RobotModel: true
@@ -303,7 +310,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: RGB8
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Max Intensity: 4096
@@ -320,12 +327,12 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: true
+      Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 0.0710000023
-        Min Value: 0.0710000023
+        Max Value: -9999
+        Min Value: 9999
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -350,6 +357,16 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
+      Value: true
+    - Alpha: 0.699999988
+      Class: rviz/Map
+      Color Scheme: map
+      Draw Behind: true
+      Enabled: true
+      Name: Map
+      Topic: /map
+      Unreliable: false
+      Use Timestamp: false
       Value: true
   Enabled: true
   Global Options:
@@ -376,25 +393,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.73900414
+      Distance: 16.9804611
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.609106243
-        Y: -0.258947372
-        Z: 0.0115707088
+        X: -1.5472697
+        Y: 8.17633533
+        Z: -8.70102882
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 1.10539842
-      Target Frame: <Fixed Frame>
+      Pitch: 0.844796538
+      Target Frame: base_link
       Value: Orbit (rviz)
-      Yaw: 3.6603992
+      Yaw: 5.01040316
     Saved: ~
 Window Geometry:
   Camera:
