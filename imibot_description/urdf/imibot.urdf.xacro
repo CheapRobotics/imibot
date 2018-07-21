@@ -1,31 +1,29 @@
 <?xml version="1.0"?>
 <robot name="imibot" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <!--xacro:arg name="laser_enabled" default="false" />
-  <xacro:arg name="laser_xyz" default="$(optenv imibot_LMS1XX_XYZ 0.2206 0.0 0.00635)" />
-  <xacro:arg name="laser_rpy" default="$(optenv imibot_LMS1XX_RPY 0.0 0.0 0.0)" />
-
-  <xacro:arg name="kinect_enabled" default="false" />
-  <xacro:arg name="kinect_xyz" default="$(optenv imibot_KINECT_XYZ 0 0 0)" />
-  <xacro:arg name="kinect_rpy" default="$(optenv imibot_KINECT_RPY 0 0.18 3.14)" /-->
-
-  <xacro:arg name="robot_namespace" default="/" />
-  <!--xacro:arg name="urdf_extras" default="empty.urdf" /-->
-
-  <!-- Included URDF/XACRO Files -->
-  <!--xacro:include filename="$(find imibot_description)/urdf/decorations.urdf.xacro" /-->
-  <xacro:include filename="$(find imibot_description)/urdf/wheel.urdf.xacro" />
-
-  <!--xacro:include filename="$(find imibot_description)/urdf/accessories/kinect_camera.urdf.xacro"/>
-  <xacro:include filename="$(find imibot_description)/urdf/accessories/sick_lms1xx_mount.urdf.xacro"/>
-  <xacro:include filename="$(find imibot_description)/urdf/accessories/sensor_arch.urdf.xacro"/-->
-
   <xacro:property name="M_PI" value="3.14159"/>
+  <xacro:arg name="robot_namespace" default="/" />
 
   <!-- Base Size -->
   <xacro:property name="base_x_size" value="0.255" />
   <xacro:property name="base_y_size" value="0.1" />
   <xacro:property name="base_z_size" value="0.039" />
+
+  <!--xacro:arg name="kinect_enabled" default="false" />
+  <xacro:arg name="kinect_xyz" default="$(optenv imibot_KINECT_XYZ 0 0 0)" />
+  <xacro:arg name="kinect_rpy" default="$(optenv imibot_KINECT_RPY 0 0.18 3.14)" /-->
+
+  <xacro:arg name="xtion_enabled" default="true" />
+  <xacro:arg name="xtion_xyz" default="$(optenv imibot_XTION_XYZ ${base_x_size/2 - 0.015} 0 ${base_z_size + 0.032})" />
+  <xacro:arg name="xtion_rpy" default="$(optenv imibot_XTION_RPY 0 0 0)" />
+
+  <!--xacro:arg name="urdf_extras" default="empty.urdf" /-->
+
+  <!-- Included URDF/XACRO Files -->
+  <xacro:include filename="$(find imibot_description)/urdf/wheel.urdf.xacro" />
+  <xacro:include filename="$(find imibot_description)/urdf/accessories/xtion_camera.urdf.xacro"/>
+  <!--xacro:include filename="$(find imibot_description)/urdf/accessories/kinect_camera.urdf.xacro"/-->
+  <!--xacro:include filename="$(find imibot_description)/urdf/decorations.urdf.xacro" /-->
 
   <!-- Wheel Mounting Positions -->
   <xacro:property name="wheelbase" value="0.11" />
@@ -39,7 +37,7 @@
   <!-- Base link is the center of the robot's bottom plate -->
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.032" rpy="0 0 0" />
+      <origin xyz="0 0 0.032" rpy="0 0 ${M_PI}" />
       <geometry>
         <!--mesh filename="package://imibot_description/meshes/base_link.dae" /-->
         <box size="${base_x_size} ${base_y_size} ${base_z_size}"/>
@@ -49,7 +47,7 @@
       </material>
     </visual>
     <collision>
-      <origin xyz="0 0 0.032" rpy="0 0 0" />
+      <origin xyz="0 0 0.032" rpy="0 0 ${M_PI}" />
       <geometry>
         <box size="${base_x_size} ${base_y_size} ${base_z_size}"/>
       </geometry>
@@ -57,10 +55,12 @@
   </link>
 
   <!-- Base footprint is on the ground under the robot -->
-  <link name="base_footprint"/>
+  <link name="base_footprint">
+    <origin rpy="0 0 ${M_PI}" />
+  </link>
 
   <joint name="base_footprint_joint" type="fixed">
-    <origin xyz="0 0 ${wheel_vertical_offset - wheel_radius}" rpy="0 0 0" />
+    <origin xyz="0 0 ${wheel_vertical_offset - wheel_radius}" rpy="0 0 ${M_PI}" />
     <parent link="base_link" />
     <child link="base_footprint" />
   </joint>
@@ -107,21 +107,7 @@
 
   <!--xacro:imibot_decorate /-->
 
-  <!--xacro:if value="$(arg laser_enabled)">
-
-    <sick_lms1xx_mount prefix="base"/>
-
-    <sick_lms1xx frame="base_laser" topic="scan" robot_namespace="$(arg robot_namespace)"/>
-
-    <joint name="laser_mount_joint" type="fixed">
-      <origin xyz="$(arg laser_xyz)" rpy="$(arg laser_rpy)" />
-      <parent link="top_plate_link" />
-      <child link="base_laser_mount" />
-    </joint>
-
-  </xacro:if>
-
-  <xacro:if value="$(arg kinect_enabled)">
+  <!--xacro:if value="$(arg kinect_enabled)">
 
     <xacro:sensor_arch prefix="" parent="top_plate_link">
       <origin xyz="-0.35 0 0.51" rpy="0 0 -3.14"/>
@@ -134,6 +120,17 @@
 
     <xacro:kinect_camera prefix="camera" robot_namespace="$(arg robot_namespace)"/>
   </xacro:if-->
+
+  <xacro:if value="$(arg xtion_enabled)">
+
+    <joint name="xtion_frame_joint" type="fixed">
+      <origin xyz="$(arg xtion_xyz)" rpy="$(arg xtion_rpy)" />
+      <parent link="base_link"/>
+      <child link="camera_link"/>
+    </joint>
+
+    <xacro:imibot_xtion prefix="camera" robot_namespace="$(arg robot_namespace)"/>
+  </xacro:if>
 
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">

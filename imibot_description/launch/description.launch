@@ -2,16 +2,17 @@
 <launch>
 
   <arg name="robot_namespace" default="/"/>
-  <arg name="laser_enabled" default="$(optenv HUSKY_LMS1XX_ENABLED false)"/>
-  <arg name="kinect_enabled" default="$(optenv HUSKY_KINECT_ENABLED false)"/>
-  <arg name="urdf_extras" default="$(optenv HUSKY_URDF_EXTRAS)"/>
+  <arg name="laser_enabled" default="$(optenv IMIBOT_LMS1XX_ENABLED false)"/>
+  <arg name="kinect_enabled" default="$(optenv IMIBOT_KINECT_ENABLED false)"/>
+  <arg name="xtion_enabled" default="$(optenv IMIBOT_XTION_ENABLED true)"/>
+  <arg name="urdf_extras" default="$(optenv IMIBOT_URDF_EXTRAS)"/>
 
   <!--param name="robot_description" textfile="$(find imibot_description)/urdf/imibot.urdf" /-->
 
   <param name="robot_description" command="$(find xacro)/xacro '$(find imibot_description)/urdf/imibot.urdf.xacro' --inorder
     robot_namespace:=$(arg robot_namespace)
-    laser_enabled:=$(arg laser_enabled)
     kinect_enabled:=$(arg kinect_enabled)
+    xtion_enabled:=$(arg xtion_enabled)
     urdf_extras:=$(arg urdf_extras)
     " />
 
