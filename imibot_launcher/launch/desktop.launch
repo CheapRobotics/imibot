@@ -5,6 +5,10 @@
     <include file="$(find imibot_launcher)/launch/robot_control.launch" />
     
     <include file="$(find imibot_launcher)/launch/gui.launch" />
+    
+    <include file="$(find imibot_camera)/launch/depth_to_scanner.launch" />
+    
+    <include file="$(find imibot_navigation)/launch/move_base.launch" />
 
     <!--include file="$(find imibot_camera)/launch/camera_stream_server.launch" /-->
 </launch>
