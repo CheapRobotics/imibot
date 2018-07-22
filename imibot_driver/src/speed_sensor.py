@@ -36,9 +36,8 @@ class SpeedSensors(Thread):
     left_direction = 1
     right_direction = 1
 
-    def __init__(self):
+    def __init__(self, rospy):
         self.speed_msg = SensorsReadings()
-        rospy.init_node('imibot_sensors')
         self.pub = rospy.Publisher('imibot/speed_sensors', SensorsReadings, queue_size=1)
 
         Thread.__init__(self)
