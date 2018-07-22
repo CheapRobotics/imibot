@@ -5,9 +5,13 @@ from diff_drive_control_handler import DiffDriveControlHandler
 
 
 def main():
-    diff_drive_control_handler = DiffDriveControlHandler()
+    # Init ROS
     rospy.init_node('imibot_driver')
-    rospy.Subscriber("robot_mg", DiffSpeed, diff_drive_control_handler.move)
+    
+    # Init Driver of robot
+    diff_drive_control_handler = DiffDriveControlHandler(rospy)
+    
+    # Loop over...
     rospy.spin()
 
 

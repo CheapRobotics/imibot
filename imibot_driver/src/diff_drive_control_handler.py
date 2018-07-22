@@ -11,14 +11,19 @@ class DiffDriveControlHandler:
     servo_max = 4095  # Max pulse length out of 4096
     servo_scale = servo_max - servo_min
 
-    def __init__(self):
+    def __init__(self, rospy):
         print 'Differential drive node initialization...'
         self.left_speed = 0
         self.right_speed = 0
         self.leftFreq = 0
         self.rightFreq = 0
+        
+        print 'Initialize Components...'
         self.chassis = Chassis()
-        self.speed_measures = SpeedSensors()
+        self.speed_measures = SpeedSensors(rospy)
+        
+        print 'Register topic of control...'
+        rospy.Subscriber("robot_mg", DiffSpeed, diff_drive_control_handler.move)
         print 'Done !'
 
     def setSpeed(self):
