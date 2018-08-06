@@ -7,7 +7,7 @@ from speed_sensor import SpeedSensors
 
 
 class DiffDriveControlHandler:
-    servo_min = 1000  # Min pulse length out of 4096
+    servo_min = 800  # Min pulse length out of 4096
     servo_max = 4095  # Max pulse length out of 4096
     servo_scale = servo_max - servo_min
 

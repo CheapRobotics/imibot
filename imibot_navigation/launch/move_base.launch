@@ -1,21 +1,32 @@
 <?xml version="1.0"?>
-
 <launch>
 
-    <master auto="start"/>
-    <!-- Run the map server --> 
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find imibot_description)/maps/map.pgm"/>
+  <arg name="no_static_map" default="false"/>
 
-    <!--- Run AMCL --> 
-    <include file="$(find amcl)/examples/amcl_diff.launch" />
-    <include file="$(find imibot_navigation)/launch/gmapping.launch" />
+  <arg name="base_global_planner" default="navfn/NavfnROS"/>
+  <arg name="base_local_planner" default="dwa_local_planner/DWAPlannerROS"/>
+  <!-- <arg name="base_local_planner" default="base_local_planner/TrajectoryPlannerROS"/> -->
 
-    <node pkg="move_base" type="move_base" name="move_base" output="screen">
-        <rosparam file="$(find imibot_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
-        <rosparam file="$(find imibot_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
-        <rosparam file="$(find imibot_navigation)/config/local_costmap_params.yaml" command="load" />
-        <rosparam file="$(find imibot_navigation)/config/global_costmap_params.yaml" command="load" /> 
-        <rosparam file="$(find imibot_navigation)/config/base_local_planner_params.yaml" command="load" />
-    </node>
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 
-</launch> 
+    <param name="base_global_planner" value="$(arg base_global_planner)"/>
+    <param name="base_local_planner" value="$(arg base_local_planner)"/>  
+    <rosparam file="$(find imibot_navigation)/config/planner.yaml" command="load"/>
+
+    <!-- observation sources located in costmap_common.yaml -->
+    <rosparam file="$(find imibot_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find imibot_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+
+    <!-- local costmap, needs size -->
+    <rosparam file="$(find imibot_navigation)/config/local_costmap_params.yaml" command="load" ns="local_costmap" />
+    <param name="local_costmap/width" value="10.0"/>
+    <param name="local_costmap/height" value="10.0"/>
+
+    <!-- static global costmap, static map provides size -->
+    <rosparam file="$(find imibot_navigation)/config/global_costmap_params.yaml" command="load" ns="global_costmap" unless="$(arg no_static_map)"/>
+    
+    <param name="global_costmap/width" value="100.0" if="$(arg no_static_map)"/>
+    <param name="global_costmap/height" value="100.0" if="$(arg no_static_map)"/>
+  </node>
+
+</launch>

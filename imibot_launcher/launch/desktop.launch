@@ -8,6 +8,8 @@
     
     <include file="$(find imibot_camera)/launch/depth_to_scanner.launch" />
     
+    <include file="$(find point_cloud_converter)/launch/point_cloud_converter.launch" />
+    
     <include file="$(find imibot_navigation)/launch/move_base.launch" />
 
     <!--include file="$(find imibot_camera)/launch/camera_stream_server.launch" /-->

@@ -63,13 +63,13 @@ namespace imibot_base
 
   void ImibotHardware::updateJointsFromHardware()
   {
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 3; i+=2)
     {
       double delta_left = linearToAngular(left_travel) - joints_[i].position;
       joints_[i].position += delta_left;
       joints_[i].velocity = linearToAngular(left_speed);
     }
-    for (int i = 2; i < 4; i++)
+    for (int i = 1; i < 5; i+=2)
     {
       double delta_right = linearToAngular(right_travel) - joints_[i].position;
 
