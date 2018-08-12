@@ -20,7 +20,7 @@ namespace imibot_base
   :
   nh_(nh)
   {
-    nh_.param<double>("wheel_diameter", wheel_diameter_, 0.066);
+    nh_.param<double>("wheel_diameter", wheel_diameter_, 0.0662);
     nh_.param<double>("max_accel", max_accel_, 5.0);
     nh_.param<double>("max_speed", max_speed_, 1.0);
     this->cmd_pub = nh_.advertise<imibot_driver::DiffSpeed>("robot_mg", 1000, false);

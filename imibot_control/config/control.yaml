@@ -7,10 +7,10 @@ imibot_velocity_controller:
   left_wheel: ['front_left_wheel', 'rear_left_wheel']
   right_wheel: ['front_right_wheel', 'rear_right_wheel']
   publish_rate: 50
-  pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
-  twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
-  cmd_vel_timeout: 0.5
-  velocity_rolling_window_size: 2
+  pose_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 0.03]
+  twist_covariance_diagonal: [0.001, 0.001, 0.001, 1000000.0, 1000000.0, 0.03]
+  cmd_vel_timeout: 0.1
+  #velocity_rolling_window_size: 2
   
 # Base frame_id
 base_frame_id: base_link
@@ -26,7 +26,7 @@ estimate_velocity_from_position: false
 #wheel_radius : 0.3
 
 # Wheel separation and radius multipliers
-wheel_separation_multiplier: 1.2 # default: 1.0
+wheel_separation_multiplier: 1.0 # default: 1.0
 wheel_radius_multiplier : 1.0 # default: 1.0
 
 # Velocity and acceleration limits
@@ -34,12 +34,12 @@ wheel_radius_multiplier : 1.0 # default: 1.0
 linear:
   x:
     has_velocity_limits : true
-    max_velocity : 0.01 # m/s
+    max_velocity : 3.0 # m/s
     has_acceleration_limits: true
-    max_acceleration : 0.01 # m/s^2
+    max_acceleration : 3.0 # m/s^2
 angular:
   z:
     has_velocity_limits : true
-    max_velocity : 0.01 # rad/s
+    max_velocity : 3.0 # rad/s
     has_acceleration_limits: true
-    max_acceleration : 0.01 # rad/s^2
+    max_acceleration : 6.0 # rad/s^2

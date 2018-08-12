@@ -6,7 +6,6 @@ Panels:
       Expanded:
         - /RobotModel1/Links1/front_left_wheel_link1/Position1
         - /DepthCloud1/Auto Size1
-        - /Map1
         - /Map1/Status1
       Splitter Ratio: 0.5
     Tree Height: 517
@@ -112,31 +111,29 @@ Visualization Manager:
       Enabled: true
       Frame Timeout: 15
       Frames:
-        All Enabled: true
+        All Enabled: false
         base_footprint:
           Value: true
         base_link:
           Value: true
         camera_depth_frame:
-          Value: true
+          Value: false
         camera_depth_optical_frame:
-          Value: true
+          Value: false
         camera_frame_optical:
-          Value: true
+          Value: false
         camera_link:
-          Value: true
+          Value: false
         camera_rgb_frame:
-          Value: true
+          Value: false
         camera_rgb_optical_frame:
-          Value: true
+          Value: false
         front_left_wheel_link:
           Value: true
         front_right_wheel_link:
           Value: true
         inertial_link:
-          Value: true
-        map:
-          Value: true
+          Value: false
         odom:
           Value: true
         rear_left_wheel_link:
@@ -146,11 +143,9 @@ Visualization Manager:
       Marker Scale: 0.5
       Name: TF
       Show Arrows: false
-      Show Axes: false
+      Show Axes: true
       Show Names: false
       Tree:
-        map:
-          {}
         odom:
           base_link:
             base_footprint:
@@ -178,13 +173,13 @@ Visualization Manager:
       Value: true
     - Class: rviz/InteractiveMarkers
       Enable Transparency: true
-      Enabled: true
+      Enabled: false
       Name: InteractiveMarkers
       Show Axes: false
       Show Descriptions: false
       Show Visual Aids: false
       Update Topic: /twist_marker_server/update
-      Value: true
+      Value: false
     - Angle Tolerance: 0.100000001
       Class: rviz/Odometry
       Covariance:
@@ -331,8 +326,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: -9999
-        Min Value: 9999
+        Max Value: 0.0710000023
+        Min Value: 0.0710000023
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -364,7 +359,7 @@ Visualization Manager:
       Draw Behind: true
       Enabled: true
       Name: Map
-      Topic: /map
+      Topic: /rtabmap/grid_map
       Unreliable: false
       Use Timestamp: false
       Value: true

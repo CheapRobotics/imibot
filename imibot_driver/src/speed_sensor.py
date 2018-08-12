@@ -10,10 +10,10 @@ from threading import Thread
 
 
 class SpeedSensors(Thread):
-    sensor_left = 27  # define the GPIO pin our sensor is attached to
-    sensor_right = 17  # define the GPIO pin our sensor is attached to
+    sensor_left = 17  # define the GPIO pin our sensor is attached to
+    sensor_right = 27  # define the GPIO pin our sensor is attached to
 
-    sample = 10  # how many half revolutions to time
+    sample = 10  # ticks number threshold
     total_ticks = 40
     count_left = 0
     count_right = 0
@@ -30,15 +30,14 @@ class SpeedSensors(Thread):
 
     pi = 3.1415926
 
-    wheel_diameter = 0.066
+    wheel_diameter = 0.0662
     circ = wheel_diameter * pi
 
     left_direction = 1
     right_direction = 1
 
-    def __init__(self):
+    def __init__(self, rospy):
         self.speed_msg = SensorsReadings()
-        rospy.init_node('imibot_sensors')
         self.pub = rospy.Publisher('imibot/speed_sensors', SensorsReadings, queue_size=1)
 
         Thread.__init__(self)
@@ -94,6 +93,7 @@ class SpeedSensors(Thread):
             self.set_left_start()  # create start time
 
         self.count_left += 1  # increase counter by 1
+
         if self.left_direction == 1:
             self.left_travel += self.circ / self.total_ticks
         elif self.left_direction == 0:

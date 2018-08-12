@@ -4,6 +4,7 @@ import rospy
 
 from chassis import Chassis
 from speed_sensor import SpeedSensors
+from imibot_driver.msg import DiffSpeed
 
 
 class DiffDriveControlHandler:
@@ -11,19 +12,24 @@ class DiffDriveControlHandler:
     servo_max = 4095  # Max pulse length out of 4096
     servo_scale = servo_max - servo_min
 
-    def __init__(self):
+    def __init__(self, rospy):
         print 'Differential drive node initialization...'
         self.left_speed = 0
         self.right_speed = 0
-        self.leftFreq = 0
-        self.rightFreq = 0
+        self.left_length = 0
+        self.right_length = 0
+
+        print 'Initialize Components...'
         self.chassis = Chassis()
-        self.speed_measures = SpeedSensors()
+        self.speed_measures = SpeedSensors(rospy)
+
+        print 'Register topic of control...'
+        rospy.Subscriber("robot_mg", DiffSpeed, self.move)
         print 'Done !'
 
     def setSpeed(self):
-        self.chassis.setLeftSpeed(int(self.leftFreq))
-        self.chassis.setRightSpeed(int(self.rightFreq))
+        self.chassis.setLeftSpeed(int(self.left_length))
+        self.chassis.setRightSpeed(int(self.right_length))
 
     def move(self, msg):
         self.left_speed = msg.left_speed
@@ -36,8 +42,8 @@ class DiffDriveControlHandler:
             self.speed_measures.stop_right_speed()
             #print 'stop'
         else:
-            self.leftFreq = (self.servo_scale * (abs(self.left_speed) / 100)) + self.servo_min
-            self.rightFreq = (self.servo_scale * (abs(self.right_speed) / 100)) + self.servo_min
+            self.left_length = (self.servo_scale * (abs(self.left_speed) / 100)) + self.servo_min
+            self.right_length = (self.servo_scale * (abs(self.right_speed) / 100)) + self.servo_min
 
             if self.left_speed > 0 and self.right_speed > 0:
                 self.speed_measures.set_left_direction(1)
