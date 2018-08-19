@@ -23,7 +23,7 @@ class DiffDriveControlHandler:
         self.chassis = Chassis()
         self.speed_measures = SpeedSensors(rospy)
 
-        print 'Register topic of control...'
+        print 'Register control topic...'
         rospy.Subscriber("robot_mg", DiffSpeed, self.move)
         print 'Done !'
 
