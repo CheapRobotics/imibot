@@ -4,9 +4,9 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /Grid1
         - /RobotModel1/Links1/front_left_wheel_link1/Position1
         - /DepthCloud1/Auto Size1
-        - /Map1/Status1
       Splitter Ratio: 0.5
     Tree Height: 517
   - Class: rviz/Selection
@@ -32,7 +32,7 @@ Visualization Manager:
   Class: ""
   Displays:
     - Alpha: 0.5
-      Cell Size: 1
+      Cell Size: 1.5
       Class: rviz/Grid
       Color: 160; 160; 164
       Enabled: true
@@ -47,7 +47,7 @@ Visualization Manager:
         Z: 0
       Plane: XY
       Plane Cell Count: 10
-      Reference Frame: <Fixed Frame>
+      Reference Frame: odom
       Value: true
     - Alpha: 0.5
       Class: rviz/RobotModel

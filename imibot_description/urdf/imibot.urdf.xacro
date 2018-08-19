@@ -68,7 +68,7 @@
   <!-- Interial link stores the robot's inertial information -->
   <link name="inertial_link">
     <inertial>
-      <mass value="2" />
+      <mass value="3" />
       <origin xyz="0 0 0.032" />
       <inertia ixx="0.0282916666667" ixy="0" ixz="0" iyy="0.0282916666667" iyz="0" izz="0.05625"/>
     </inertial>
@@ -82,13 +82,13 @@
 
   <!-- IMU Link is the standard mounting position for the UM6 IMU.-->
   <!-- Can be modified with environment variables in /etc/ros/setup.bash -->
-  <!--link name="imu_link"/>
+  <link name="imu_link"/>
   <joint name="imu_joint" type="fixed">
-    <origin xyz="$(optenv imibot_IMU_XYZ 0.19 0 0.149)" rpy="$(optenv imibot_IMU_RPY 0 -1.5708 3.1416)" />
+    <origin xyz="$(optenv imibot_IMU_XYZ 0 0 0)" rpy="$(optenv imibot_IMU_RPY 0 0 0)" />
     <parent link="base_link" />
     <child link="imu_link" />
   </joint>
-  <gazebo reference="imu_link">
+  <!--gazebo reference="imu_link">
   </gazebo-->
 
   <!-- imibot wheel macros -->
