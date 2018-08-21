@@ -1,0 +1,3 @@
+# Contributing to ImiBot
+
+Coming soon...
