@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <node name="imibot_imu" pkg="imibot_navigation" type="imu_node.py" output="screen" />
+
+</launch>

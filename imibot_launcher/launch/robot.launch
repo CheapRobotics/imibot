@@ -4,7 +4,9 @@
     <!-- Run driver package -->
     <node name="imibot_driver" pkg="imibot_driver" type="imibot_diff_drive_node.py" output="screen" />
     
-    <include file="$(find openni_launch)/launch/openni.launch" />
+    <!--<include file="$(find openni_launch)/launch/openni.launch" />-->
+
+    <include file="$(find imibot_navigation)/launch/imu.launch" />
 
     <!-- Run web_video_server -->
     <!--include file="$(find imibot_camera)/launch/camera_stream_server.launch" /-->

@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# coding=utf-8
+
 import RPi.GPIO as GPIO
 import Adafruit_PCA9685
 import time
@@ -11,6 +14,10 @@ except Exception:
     print('Pas de carte branchée en I2C')
 
 GPIO.setmode(GPIO.BCM)
+GPIO.setup(26, GPIO.OUT)
+GPIO.setup(19, GPIO.OUT)
+GPIO.setup(13, GPIO.OUT)
+GPIO.setup(6, GPIO.OUT)
 
 GPIO.output(26, False)
 GPIO.output(13, False)

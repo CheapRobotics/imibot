@@ -7,7 +7,7 @@ class Chassis:
     def __init__(self):
         try:
             self.pwm = Adafruit_PCA9685.PCA9685()
-            self.pwm.set_pwm_freq(60)
+            self.pwm.set_pwm_freq(500)
         except Exception:
             print('Pas de carte brancher en I2C')
         GPIO.setmode(GPIO.BCM)
